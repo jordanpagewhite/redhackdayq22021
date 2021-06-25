@@ -1,6 +1,8 @@
 import Kafka from 'node-rdkafka';
 import hidePositionTopic from '../hidePositionTopic.js';
 
+const interval = 10000;
+
 const stream = Kafka.Producer.createWriteStream({
   'metadata.broker.list': 'localhost:9092'
 }, {}, {
@@ -12,7 +14,7 @@ stream.on('error', (err) => {
   console.error(err);
 });
 
-function queuePosition() {
+let queuePosition = () => {
   const event = getRandomPosition();
   const success = stream.write(hidePositionTopic.toBuffer(event));
   if (success) {
@@ -22,9 +24,10 @@ function queuePosition() {
   }
 }
 
-function getRandomPosition() {
-  const x = Math.floor(Math.random() * 10);
-  const y = Math.floor(Math.random() * 10);
+let getRandomPosition = () => {
+  const bounds = 10;
+  const x = Math.floor(Math.random() * bounds);
+  const y = Math.floor(Math.random() * bounds);
   return {
     'x': x,
     'y': y,
@@ -33,4 +36,4 @@ function getRandomPosition() {
 
 setInterval(() => {
   queuePosition();
-}, 10000);
+}, interval);
