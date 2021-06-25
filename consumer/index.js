@@ -1,7 +1,9 @@
 import Kafka from 'node-rdkafka';
-import eventType from '../eventType.js';
+import hidePositionTopic from '../hidePositionTopic.js';
 
-var consumer = new Kafka.KafkaConsumer({
+let hiders = [];
+
+const consumer = new Kafka.KafkaConsumer({
   'group.id': 'kafka',
   'metadata.broker.list': 'localhost:9092',
 }, {});
@@ -10,8 +12,10 @@ consumer.connect();
 
 consumer.on('ready', () => {
   console.log('consumer ready..')
-  consumer.subscribe(['test']);
+  consumer.subscribe(['hidePositionTopic']);
   consumer.consume();
 }).on('data', function(data) {
-  console.log(`received message: ${eventType.fromBuffer(data.value)}`);
+  console.log(`received message: ${hidePositionTopic.fromBuffer(data.value)}`);
+  hiders.push(hidePositionTopic.fromBuffer(data.value));
+  console.log(hiders);
 });

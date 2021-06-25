@@ -1,10 +1,10 @@
 import Kafka from 'node-rdkafka';
-import eventType from '../eventType.js';
+import hidePositionTopic from '../hidePositionTopic.js';
 
 const stream = Kafka.Producer.createWriteStream({
   'metadata.broker.list': 'localhost:9092'
 }, {}, {
-  topic: 'test'
+  topic: 'hidePositionTopic'
 });
 
 stream.on('error', (err) => {
@@ -12,11 +12,9 @@ stream.on('error', (err) => {
   console.error(err);
 });
 
-function queueRandomMessage() {
-  const category = getRandomAnimal();
-  const noise = getRandomNoise(category);
-  const event = { category, noise };
-  const success = stream.write(eventType.toBuffer(event));     
+function queuePosition() {
+  const event = getRandomPosition();
+  const success = stream.write(hidePositionTopic.toBuffer(event));
   if (success) {
     console.log(`message queued (${JSON.stringify(event)})`);
   } else {
@@ -24,23 +22,15 @@ function queueRandomMessage() {
   }
 }
 
-function getRandomAnimal() {
-  const categories = ['CAT', 'DOG'];
-  return categories[Math.floor(Math.random() * categories.length)];
-}
-
-function getRandomNoise(animal) {
-  if (animal === 'CAT') {
-    const noises = ['meow', 'purr'];
-    return noises[Math.floor(Math.random() * noises.length)];
-  } else if (animal === 'DOG') {
-    const noises = ['bark', 'woof'];
-    return noises[Math.floor(Math.random() * noises.length)];
-  } else {
-    return 'silence..';
-  }
+function getRandomPosition() {
+  const x = Math.floor(Math.random() * 10);
+  const y = Math.floor(Math.random() * 10);
+  return {
+    'x': x,
+    'y': y,
+  };
 }
 
 setInterval(() => {
-  queueRandomMessage();
-}, 3000);
+  queuePosition();
+}, 10000);

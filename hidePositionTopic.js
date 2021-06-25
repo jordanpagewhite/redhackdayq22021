@@ -4,12 +4,12 @@ export default avro.Type.forSchema({
   type: 'record',
   fields: [
     {
-      name: 'category',
-      type: { type: 'enum', symbols: ['DOG', 'CAT'] }
+      name: 'x',
+      type: 'int',
     },
     {
-      name: 'noise',
-      type: 'string',
+      name: 'y',
+      type: 'int',
     }
   ]
 });
