@@ -1,10 +1,12 @@
+# Red Hack Day Q2 2021
+
+I have cloned [kriscfoster/node-kafka-producer-consumer](https://github.com/kriscfoster/node-kafka-producer-consumer) to accelerate my progress today, so that I can hopefully focus most of my time on learning and working with Apache Kafka.
+
 # node-kafka-producer-consumer
 
-Created for [this YouTube tutorial](https://www.youtube.com/watch?v=EiDLKECLcZw).
+Created by kriscfoster for [this YouTube tutorial](https://www.youtube.com/watch?v=EiDLKECLcZw).
 
 A kafka producer/consumer proof of concept using node.
-
-![Screen Shot 2021-04-20 at 09 56 47](https://user-images.githubusercontent.com/17026751/115368228-cbcd0000-a1be-11eb-9d17-6ada1ad5ff98.png)
 
 ## Prerequisites
 
